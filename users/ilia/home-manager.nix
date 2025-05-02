@@ -65,7 +65,6 @@ in {
     pkgs.watch
 
     pkgs.gopls
-    pkgs.zigpkgs."0.14.0"
 
     # Node is required for Copilot.vim
     pkgs.nodejs
@@ -103,9 +102,7 @@ in {
   home.file = {
     ".gdbinit".source = ./gdbinit;
     ".inputrc".source = ./inputrc;
-  } // (if isDarwin then {
-    "Library/Application Support/jj/config.toml".source = ./jujutsu.toml;
-  } else {});
+  };
 
   xdg.configFile = {
     "i3/config".text = builtins.readFile ./i3;
@@ -124,7 +121,6 @@ in {
     "rectangle/RectangleConfig.json".text = builtins.readFile ./RectangleConfig.json;
   } else {}) // (if isLinux then {
     "ghostty/config".text = builtins.readFile ./ghostty.linux;
-    "jj/config.toml".source = ./jujutsu.toml;
   } else {});
 
   #---------------------------------------------------------------------
@@ -147,8 +143,7 @@ in {
     config = {
       whitelist = {
         prefix= [
-          "$HOME/code/go/src/github.com/hashicorp"
-          "$HOME/code/go/src/github.com/mitchellh"
+          "$HOME/code/go/src/github.com/ilidemi"
         ];
 
         exact = ["$HOME/.envrc"];
@@ -179,8 +174,8 @@ in {
 
   programs.git = {
     enable = true;
-    userName = "Mitchell Hashimoto";
-    userEmail = "m@mitchellh.com";
+    userName = "Ilia Demianenko";
+    userEmail = "ilia.demianenko@clickhouse.com";
     signing = {
       key = "523D5DC389D273BC";
       signByDefault = true;
@@ -195,7 +190,7 @@ in {
       color.ui = true;
       core.askPass = ""; # needs to be empty to use terminal for ask pass
       credential.helper = "store"; # want to make this more secure
-      github.user = "mitchellh";
+      github.user = "ilidemi";
       push.default = "tracking";
       init.defaultBranch = "main";
     };
@@ -204,14 +199,7 @@ in {
   programs.go = {
     enable = true;
     goPath = "code/go";
-    goPrivate = [ "github.com/mitchellh" "github.com/hashicorp" "rfc822.mx" ];
-  };
-
-  programs.jujutsu = {
-    enable = true;
-
-    # I don't use "settings" because the path is wrong on macOS at
-    # the time of writing this.
+    goPrivate = [ "github.com/ilidemi" ];
   };
 
   programs.tmux = {
@@ -288,7 +276,6 @@ in {
       customVim.vim-misc
       customVim.vim-pgsql
       customVim.vim-tla
-      customVim.vim-zig
       customVim.pigeon
       customVim.AfterColors
 
